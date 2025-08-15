@@ -20,6 +20,7 @@ spring:
   redis:
     host: 127.0.0.1
     port: 6379
+    password: JetLinks@redis
     lettuce:
       pool:
         max-active: 1024
@@ -50,13 +51,24 @@ easyorm:
   default-schema: public # 数据库默认的schema
   dialect: postgres #数据库方言
 tdengine:
-  enabled: false
+  enabled: true
   database: jetlinks
   restful:
     endpoints:
       - http://127.0.0.1:6041/
     username: root
     password: taosdata
+
+timeseries:
+  provider: tdengine # 使用TDengine作为时序数据库
+  tdengine:
+    enabled: true
+    database: jetlinks
+    restful:
+      endpoints:
+        - http://127.0.0.1:6041/
+      username: root
+      password: taosdata
 elasticsearch:
   embedded:
     enabled: false # 为true时使用内嵌的elasticsearch,不建议在生产环境中使用

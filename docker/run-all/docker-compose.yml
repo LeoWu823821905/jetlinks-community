@@ -3,15 +3,15 @@ services:
   redis:
     image: redis:5.0.4
     container_name: jetlinks-ce-redis
-    #    ports:
-    #      - "6379:6379"
+    ports:
+      - "6379:6379"
     volumes:
       - "./data/redis:/data"
     command: redis-server --appendonly yes --requirepass "JetLinks@redis"
     environment:
       - TZ=Asia/Shanghai
   elasticsearch:
-    image: elasticsearch:6.8.11
+    image: elastic/elasticsearch:7.17.23
     container_name: jetlinks-ce-elasticsearch
     environment:
       ES_JAVA_OPTS: -Djava.net.preferIPv4Stack=true -Xms1g -Xmx1g
@@ -20,13 +20,13 @@ services:
       bootstrap.memory_lock: "true"
       discovery.zen.minimum_master_nodes: 1
       discovery.zen.ping.unicast.hosts: elasticsearch
-  #  volumes:
-  #    - ./data/elasticsearch:/usr/share/elasticsearch/data
-  #    ports:
-  #      - "9200:9200"
-  #      - "9300:9300"
+    volumes:
+      - ./data/elasticsearch:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+      - "9300:9300"
   kibana:
-    image: kibana:6.8.11
+    image: elastic/kibana:7.17.23
     container_name: jetlinks-ce-kibana
     environment:
       ELASTICSEARCH_URL: http://elasticsearch:9200
@@ -53,15 +53,15 @@ services:
     ports:
       - 9000:80
     environment:
-      - "API_BASE_PATH=http://jetlinks:8848/" #API根路径
+      - "API_BASE_PATH=http://192.168.0.101:8848/" #API根路径
     volumes:
       - "./data/jetlinks-ui:/usr/share/nginx/html/upload"
     links:
       - jetlinks:jetlinks
   jetlinks:
-    image: registry.cn-shenzhen.aliyuncs.com/jetlinks/jetlinks-community:2.3.0-SNAPSHOT
+    # image: registry.cn-shenzhen.aliyuncs.com/jetlinks/jetlinks-community:2.3.0-SNAPSHOT
+    image: jetlinks-local:2.3.0
     container_name: jetlinks-ce
-
     ports:
       - "8848:8848" # API端口
       - "1883-1890:1883-1890" # 预留

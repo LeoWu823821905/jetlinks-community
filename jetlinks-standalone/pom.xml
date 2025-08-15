@@ -105,6 +105,18 @@
             <classifier>osx-x86_64</classifier>
         </dependency>
 
+        <!-- 添加MacOS DNS解析器依赖 -->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-resolver-dns-native-macos</artifactId>
+            <classifier>osx-x86_64</classifier>
+        </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-resolver-dns-native-macos</artifactId>
+            <classifier>osx-aarch_64</classifier>
+        </dependency>
+
 
         <dependency>
             <groupId>io.projectreactor.netty</groupId>
